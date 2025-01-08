@@ -1,11 +1,9 @@
 import os
-import imp
 
 from setuptools import setup, find_packages
 
 
-version = imp.load_source(
-    "krb5ticket.version", os.path.join("krb5ticket", "version.py")).version
+version = "1.0.4"
 
 setup(
     name="python-krb5ticket",
