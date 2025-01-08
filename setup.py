@@ -13,7 +13,7 @@ setup(
     packages=find_packages(exclude=["tests", "tests.*"]),
     install_requires=[
         "gssapi",
-        "pandas==1.1.3"
+        "pandas"
     ],
     author="Deric Degagne",
     author_email="deric.degagne@gmail.com",
