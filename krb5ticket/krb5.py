@@ -144,7 +144,7 @@ class Krb5:
         """
         if not store:
             # default store self._store == {} doesn't need touching.
-            return True
+            store = None
         try:
             creds.store(store=store, usage=usage, set_default=set_default,
                         overwrite=overwrite)
