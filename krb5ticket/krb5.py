@@ -185,6 +185,28 @@ class Krb5:
         ):
             return False
 
+    def acquire_from_default(
+            self,
+            usage: str = "initiate",
+    ) -> bool:
+        """
+        Acquire Kerberos ticket-granting ticket (TGT) from existing default store
+
+        :param keytab: Kerberos keytab file.
+        :param usage: usage to store the credentials with -- either 'both',
+            'initiate' or 'accept'.
+        :return: True on success, otherwise False.
+        """
+        krb5_creds = {
+            "name": self.principal,
+            "usage": usage,
+            "store": self.store
+        }
+        creds = self._acquire_creds(krb5_creds)
+        if not creds:
+            return False
+        return True
+        
     def acquire_with_keytab(
         self,
         keytab: str,
