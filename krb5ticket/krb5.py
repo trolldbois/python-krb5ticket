@@ -142,7 +142,7 @@ class Krb5:
         :return: True when credentials are successfully stored, 
             otherwise False.
         """
-        if store:
+        if not store:
             # default store self._store == {} doesn't need touching.
             return True
         try:
