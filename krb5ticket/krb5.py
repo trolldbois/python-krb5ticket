@@ -112,14 +112,17 @@ class Krb5:
         """
         Gets the Kerberos credential expiry state.
         """
-        return getattr(self, "_is_expired", None)
-
-    @is_expired.setter
-    def is_expired(self, is_expired: bool) -> None:
-        """
-        Sets the Kerberos credential expiry state.
-        """
-        self._is_expired = is_expired
+        try:
+            creds = self._acquire_default()
+        except gssapi.exceptions.ExpiredCredentialsError:
+            return True
+        except (
+            gssapi.exceptions.GSSError,
+            gssapi.exceptions.MissingCredentialsError,
+            gssapi.exceptions.InvalidCredentialsError
+        ) as e:
+            return True
+        return False
 
     def _store_creds(
         self,
@@ -177,11 +180,11 @@ class Krb5:
                 creds = gssapi.Credentials(**raw_creds)
             creds.inquire()
             self.lifetime = creds.lifetime
-            self.is_expired = False
+            # self.is_expired = False
             return creds
         except gssapi.exceptions.ExpiredCredentialsError:
             self._lifetime = None
-            self.is_expired = True
+            # self.is_expired = True
             return None
         except (
             gssapi.exceptions.GSSError,
@@ -203,15 +206,30 @@ class Krb5:
             'initiate' or 'accept'.
         :return: True on success, otherwise False.
         """
+        creds = self._acquire_default()
+        if not creds:
+            return False
+        return True
+
+    def _acquire_default(
+            self,
+            usage: str = "initiate",
+    ) -> bool:
+        """
+        Acquire Kerberos ticket-granting ticket (TGT) from existing default store
+
+        :param keytab: Kerberos keytab file.
+        :param usage: usage to store the credentials with -- either 'both',
+            'initiate' or 'accept'.
+        :return: creds or False
+        """
         krb5_creds = {
             "name": self.principal,
             "usage": usage,
             "store": self.store
         }
         creds = self._acquire_creds(krb5_creds)
-        if not creds:
-            return False
-        return True
+        return creds
         
     def acquire_with_keytab(
         self,
