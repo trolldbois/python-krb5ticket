@@ -16,7 +16,7 @@ setup(
     author="Deric Degagne",
     author_email="deric.degagne@gmail.com",
     description="Simple Python wrapper to create Kerberos ticket-granting tickets (TGT)",
-    url="https://github.com/degagne/python-krb5ticket",
+    url="https://github.com/trolldbois/python-krb5ticket",
     license="MIT",
     classifiers=[
         "Intended Audience :: Developers",
