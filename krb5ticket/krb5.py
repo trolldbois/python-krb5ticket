@@ -155,7 +155,7 @@ class Krb5:
             gssapi.exceptions.OperationUnavailableError,
             gssapi.exceptions.DuplicateCredentialsElementError,
         ) as e:
-            logging.exception("Krb store failed")
+            logging.exception(f"Krb store failed, store:{store}")
             return False
 
     def _acquire_creds(
@@ -188,7 +188,7 @@ class Krb5:
             gssapi.exceptions.MissingCredentialsError,
             gssapi.exceptions.InvalidCredentialsError
         ) as e:
-            logging.debug("KRB acquire failed: {e}")
+            logging.debug(f"KRB acquire failed: {e}")
             return False
 
     def acquire_from_default(
