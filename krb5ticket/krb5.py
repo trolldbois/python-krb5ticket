@@ -142,8 +142,8 @@ class Krb5:
         :return: True when credentials are successfully stored, 
             otherwise False.
         """
-        if store is None:
-            # default store doesn't need touching.
+        if store:
+            # default store self._store == {} doesn't need touching.
             return True
         try:
             creds.store(store=store, usage=usage, set_default=set_default,
