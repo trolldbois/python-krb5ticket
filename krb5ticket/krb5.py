@@ -188,7 +188,7 @@ class Krb5:
             gssapi.exceptions.MissingCredentialsError,
             gssapi.exceptions.InvalidCredentialsError
         ) as e:
-            logging.exception("KRB acquire failed")
+            logging.debug("KRB acquire failed: {e}")
             return False
 
     def acquire_from_default(
