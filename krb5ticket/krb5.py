@@ -150,7 +150,8 @@ class Krb5:
             gssapi.exceptions.ExpiredCredentialsError,
             gssapi.exceptions.OperationUnavailableError,
             gssapi.exceptions.DuplicateCredentialsElementError,
-        ):
+        ) as e:
+            logging.exception("Krb store failed")
             return False
 
     def _acquire_creds(
@@ -182,7 +183,8 @@ class Krb5:
             gssapi.exceptions.GSSError,
             gssapi.exceptions.MissingCredentialsError,
             gssapi.exceptions.InvalidCredentialsError
-        ):
+        ) as e:
+            logging.exception("KRB acquire failed")
             return False
 
     def acquire_from_default(
@@ -275,7 +277,8 @@ class Krb5:
                 usage=usage,
                 mechs=[gssapi.raw.MechType.kerberos]
             )
-        except gssapi.exceptions.GSSError:
+        except gssapi.exceptions.GSSError as e:
+            logging.exception("Unable to acquire Kerberos credentials to obtain a ticket-granting ticket (TGT).")
             # Unable to acquire Kerberos credentials to obtain a
             # ticket-granting ticket (TGT).
             return False
