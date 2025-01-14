@@ -251,7 +251,7 @@ class Krb5:
                 name=self.principal, 
                 password=password.encode("UTF-8"),
                 usage=usage,
-                mechs=gssapi.raw.MechType.kerberos
+                mechs=[gssapi.raw.MechType.kerberos]
             )
         except gssapi.exceptions.GSSError:
             # Unable to acquire Kerberos credentials to obtain a
