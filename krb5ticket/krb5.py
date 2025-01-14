@@ -122,7 +122,9 @@ class Krb5:
             gssapi.exceptions.InvalidCredentialsError
         ) as e:
             return True
-        return False
+        if creds:
+            return False
+        return True
 
     def _store_creds(
         self,
