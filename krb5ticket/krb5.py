@@ -90,7 +90,7 @@ class Krb5:
         return self._store
 
     @property
-    def lifetime(self) -> str:
+    def lifetime(self) -> datetime.datetime:
         """
         Gets the Kerberos credential expiry date.
         """
@@ -102,8 +102,7 @@ class Krb5:
         Sets the Kerberos credential expiry date.
         """
         if isinstance(seconds, int):
-            timestamp = dt.datetime.now() + dt.timedelta(0, seconds)
-            self._lifetime = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+            self._lifetime = dt.datetime.now() + dt.timedelta(0, seconds)
         else:
             self._lifetime = None
 
