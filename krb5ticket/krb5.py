@@ -1,6 +1,6 @@
 import gssapi
 import typing as t
-import datetime as dt
+import datetime
 import pathlib
 import logging
 import shutil
@@ -102,7 +102,7 @@ class Krb5:
         Sets the Kerberos credential expiry date.
         """
         if isinstance(seconds, int):
-            self._lifetime = dt.datetime.now() + dt.timedelta(0, seconds)
+            self._lifetime = datetime.datetime.now() + datetime.timedelta(0, seconds)
         else:
             self._lifetime = None
 
